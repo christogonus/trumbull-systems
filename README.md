@@ -1,0 +1,34 @@
+# Trumbull Systems website
+
+Static website built with Tailwind CSS 4.1.14. Only `dist/` is published. Original business records remain outside this project.
+
+## Edit and build
+
+- Content and structure: `dist/index.html`
+- Theme and styles: `src.css`
+- Interactions: `dist/app.js` and `dist/theme.js`
+- Replaceable local images: `dist/assets/`
+- Compile styles: `./tailwindcss.exe -i ./src.css -o ./dist/styles.css --minify`
+- Local preview: `python -m http.server 4173 --bind 127.0.0.1 --directory dist`
+
+Tailwind standalone compiler: https://github.com/tailwindlabs/tailwindcss/releases/tag/v4.1.14 . Download the appropriate compiler for your operating system. The compiler binary is not committed or published.
+
+## Contact
+
+The contact form opens a `mailto:` draft. It never claims a message has been delivered. The business email came from the supplied Certificate of Organization. Replace all instances in index.html and app.js when changing it. No API keys or email service are required.
+
+## Content sources
+
+Company activities and location: supplied business summary and Certificate of Organization. No tax identifiers, ownership details, signatures or source documents are published.
+
+Product descriptions reviewed on October 8, 2026: https://vidket.com/ , https://blazehumanizer.com/ , https://vividwriter.app/ . Product pricing, adoption statistics and unsupported performance claims are intentionally absent.
+
+## Assets
+
+- logo-light.png and logo-dark.png: supplied raw assets 1.png and 2.png, unchanged.
+- favicon.png: supplied raw asset 4.png, unchanged.
+- architecture.jpg: Sebastian Schuster on Unsplash, https://unsplash.com/photos/modern-building-with-reflective-blue-glass-facade-uvFmI99WV8Q . Downloaded from https://images.unsplash.com/photo-1770155374632-2ee56acc5116?auto=format&fit=crop&w=1600&h=1200&q=85 . Licensed under https://unsplash.com/license . Illustrative architecture, not represented as the company's office.
+
+## Accessibility
+
+Target: WCAG 2.2 Level AA. Semantic landmarks and headings, skip link, native controls, visible keyboard focus, persistent theme choice, reduced-motion support, high contrast palettes, and responsive reflow. See ACCESSIBILITY.md for verification and remaining manual checks. ANDI is a testing aid, not a legal certification.
