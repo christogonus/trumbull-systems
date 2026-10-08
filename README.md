@@ -12,6 +12,14 @@ Static website built with Tailwind CSS 4.1.14. Only `dist/` is published. Origin
 - Compile styles: `./tailwindcss.exe -i ./src.css -o ./dist/styles.css --minify`
 - Local preview: `python -m http.server 4173 --bind 127.0.0.1 --directory dist`
 
+## cPanel PHP contact form
+
+Upload the contents of `dist/` into `public_html/`. Upload `contact-config.example.php` beside `contact.php` as `contact-config.php`, then replace `YOUR_HCAPTCHA_SECRET` with the secret from hCaptcha. Replace `YOUR_HCAPTCHA_SITEKEY` in `dist/index.html` with the hCaptcha site key. Keep `contact-config.php` out of Git; it is ignored by `.gitignore`.
+
+The form posts to `contact.php`. With JavaScript it uses AJAX and displays an inline status; with JavaScript disabled it submits normally to the same PHP endpoint. The endpoint verifies hCaptcha server-side, routes Privacy or legal inquiry to legal@trumbullsystems.com, routes other subjects to info@trumbullsystems.com, and sends through cPanel PHP `mail()`.
+
+Use an hCaptcha site key registered for the live domain. The allowed origins in `contact-config.php` should match the HTTPS domain visitors use. Make sure the cPanel account has working email DNS and that `mail()` is enabled; otherwise replace the `mail()` call with the hosting provider’s SMTP or API service.
+
 Tailwind standalone compiler: https://github.com/tailwindlabs/tailwindcss/releases/tag/v4.1.14 . Download the appropriate compiler for your operating system. The compiler binary is not committed or published.
 
 ## Contact

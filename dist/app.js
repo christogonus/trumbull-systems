@@ -31,8 +31,12 @@ document.querySelector('#contact-form')?.addEventListener('submit', event => {
  const form = event.currentTarget;
  if (!form.reportValidity()) return;
  const values = new FormData(form);
- const body = `Name: ${values.get('name')}\nEmail: ${values.get('email')}\n\n${values.get('body')}`;
- const recipient = values.get('subject') === 'Privacy or legal inquiry' ? 'legal@trumbullsystems.com' : 'info@trumbullsystems.com';
- location.href = `mailto:${recipient}?subject=${encodeURIComponent('Trumbull Systems: ' + values.get('subject'))}&body=${encodeURIComponent(body)}`;
- document.querySelector('#form-status').textContent = `Your email draft is ready to open. If your email app did not open, email ${recipient} directly. Your message has not been sent by this website.`;
+ const status = document.querySelector('#form-status');
+ if (!values.get('h-captcha-response')) { status.textContent = 'Complete the security check before sending.'; return; }
+ const button = form.querySelector('button[type="submit"]'); button.disabled = true; button.setAttribute('aria-disabled','true'); status.textContent = 'Sending your message…';
+ fetch(form.action, {method:'POST', body:values, headers:{Accept:'application/json'}}).then(async response => {
+  const result = await response.json().catch(()=>({}));
+  if (!response.ok || !result.ok) throw new Error(result.message || 'The message could not be sent.');
+  form.reset(); if (window.hcaptcha) window.hcaptcha.reset(); status.textContent = 'Your message was sent. We will reply from the appropriate Trumbull Systems address.';
+ }).catch(error => { status.textContent = error.message + ' You can email info@trumbullsystems.com directly.'; }).finally(() => { button.disabled = false; button.removeAttribute('aria-disabled'); });
 });
