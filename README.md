@@ -1,43 +1,81 @@
 # Trumbull Systems website
 
-Static website built with Tailwind CSS 4.1.14. Only `dist/` is published. Original business records remain outside this project.
+The public website for **Trumbull Systems LLC**, a Connecticut software development and publishing company. Trumbull Systems builds practical software for businesses, independent creators, writers, and developers, and welcomes product, publishing, and distribution partnerships worldwide.
 
-## Edit and build
+The site introduces three products:
 
-- Content and structure: `dist/index.html`
-- Theme and styles: `src.css`
-- Interactions: `dist/app.js` and `dist/theme.js`
-- Legal pages: edit `build-legal.cjs` and `legal-operations.json`, then run `node build-legal.cjs` before compiling styles. Generated pages are under `dist/legal/`, `dist/privacy-policy/`, `dist/terms-of-service/`, `dist/refund-policy/`, `dist/delivery-policy/`, and `dist/contact/`.
-- Replaceable local images: `dist/assets/`
-- Compile styles: `./tailwindcss.exe -i ./src.css -o ./dist/styles.css --minify`
-- Local preview: `python -m http.server 4173 --bind 127.0.0.1 --directory dist`
+- **[Vidket](https://vidket.com/)**: video hosting, branded embeds, calls to action, lead capture, and viewer engagement tools for businesses.
+- **[Blaze Humanizer](https://blazehumanizer.com/)**: text cleanup and rewriting tools for people who need clearer, more natural drafts while keeping control of their wording.
+- **[VividWriter](https://vividwriter.app/)**: a desktop book writing and publishing studio for Windows and macOS, with manuscript, cover, formatting, PDF, DOCX, and EPUB workflows.
 
-## cPanel PHP contact form
+Trumbull Systems works with independent developers and business partners on software publishing, product distribution, customer acquisition, and go-to-market support. Partnership inquiries are welcome from every region.
 
-Upload the contents of `dist/` into `public_html/`. Upload `contact-config.example.php` beside `contact.php` as `contact-config.php`, then replace `YOUR_HCAPTCHA_SECRET` with the secret from hCaptcha. Replace `YOUR_HCAPTCHA_SITEKEY` in `dist/index.html` with the hCaptcha site key. Keep `contact-config.php` out of Git; it is ignored by `.gitignore`.
+## Website features
 
-The form posts to `contact.php`. With JavaScript it uses AJAX and displays an inline status; with JavaScript disabled it submits normally to the same PHP endpoint. The endpoint verifies hCaptcha server-side, routes Privacy or legal inquiry to legal@trumbullsystems.com, routes other subjects to info@trumbullsystems.com, and sends through cPanel PHP `mail()`.
+- Responsive static HTML website built with Tailwind CSS 4.1.14.
+- Light and dark display modes with a saved theme preference.
+- Local WebP logo, favicon, and hero artwork for fast delivery and easy replacement.
+- Product pages linked to the official Vidket, Blaze Humanizer, and VividWriter websites.
+- Dedicated legal, privacy, terms, refunds, digital delivery, and contact pages.
+- PHP contact form endpoint for cPanel hosting with optional AJAX submission and hCaptcha verification.
+- General correspondence at `info@trumbullsystems.com`; legal and privacy correspondence at `legal@trumbullsystems.com`.
+- Keyboard navigation, visible focus states, semantic landmarks, responsive reflow, reduced-motion support, and accessible form status announcements.
 
-Use an hCaptcha site key registered for the live domain. The allowed origins in `contact-config.php` should match the HTTPS domain visitors use. Make sure the cPanel account has working email DNS and that `mail()` is enabled; otherwise replace the `mail()` call with the hosting provider’s SMTP or API service.
+## Project structure
 
-Tailwind standalone compiler: https://github.com/tailwindlabs/tailwindcss/releases/tag/v4.1.14 . Download the appropriate compiler for your operating system. The compiler binary is not committed or published.
+Only `dist/` is published to a web server.
 
-## Contact
+- `dist/index.html`: main company, products, partnership, and contact page.
+- `dist/assets/`: local WebP brand assets and replaceable artwork.
+- `dist/styles.css`: compiled Tailwind CSS output.
+- `dist/app.js` and `dist/theme.js`: contact form behavior, navigation, and theme selection.
+- `dist/contact.php`: cPanel form processor with hCaptcha and email routing.
+- `build-legal.cjs` and `legal-operations.json`: legal page source and generation data.
+- `src.css`: Tailwind source styles.
+- `ACCESSIBILITY.md`: accessibility targets and verification notes.
 
-The contact form opens a `mailto:` draft. It never claims a message has been delivered. General information, partnerships, product support and routine billing use info@trumbullsystems.com. Legal notices, privacy requests and policy questions use legal@trumbullsystems.com. The form routes its Privacy or legal inquiry option to Legal and other options to Info. Without JavaScript, use the direct addresses on the Contact and Support page. When changing addresses, update dist/index.html, dist/app.js, build-legal.cjs and legal-operations.json, then regenerate the legal pages. The website does not create or configure mailboxes. No API keys or email service are required for the draft form.
+## Build and preview
 
-## Content sources
+From this directory, compile the production stylesheet:
 
-Company activities and location: supplied business summary and Certificate of Organization. No tax identifiers, ownership details, signatures or source documents are published.
+```powershell
+.\tailwindcss.exe -i .\src.css -o .\dist\styles.css --minify
+```
 
-Product descriptions reviewed on October 8, 2026: https://vidket.com/ , https://blazehumanizer.com/ , https://vividwriter.app/ . Product pricing, adoption statistics and unsupported performance claims are intentionally absent.
+Regenerate the legal pages when their source or operational policy data changes:
 
-## Assets
+```powershell
+node build-legal.cjs
+```
 
-- logo-light.png and logo-dark.png: supplied raw assets 1.png and 2.png, unchanged.
-- favicon.png: supplied raw asset 4.png, unchanged.
-- architecture.jpg: Sebastian Schuster on Unsplash, https://unsplash.com/photos/modern-building-with-reflective-blue-glass-facade-uvFmI99WV8Q . Downloaded from https://images.unsplash.com/photo-1770155374632-2ee56acc5116?auto=format&fit=crop&w=1600&h=1200&q=85 . Licensed under https://unsplash.com/license . Illustrative architecture, not represented as the company's office.
+Preview the published files locally:
+
+```powershell
+python -m http.server 4173 --bind 127.0.0.1 --directory dist
+```
+
+Then open `http://127.0.0.1:4173/` in a browser. Do not open `dist/index.html` directly with a `file://` URL because PHP form requests and root-relative asset paths require HTTP hosting.
+
+## cPanel deployment
+
+Upload the contents of `dist/` into the domain's `public_html/` directory. Copy `dist/contact-config.example.php` to `contact-config.php` on the server and set the live hCaptcha secret, allowed HTTPS origins, and mailbox settings. Keep the live `contact-config.php` out of Git.
+
+Replace `YOUR_HCAPTCHA_SITEKEY` in `dist/index.html` with the site key registered for the live domain. The PHP endpoint verifies hCaptcha server-side, sends legal and privacy inquiries to `legal@trumbullsystems.com`, and sends general, partnership, support, billing, and accessibility inquiries to `info@trumbullsystems.com`.
+
+The form supports JavaScript-enhanced submission with visible success and error alerts. With JavaScript disabled, it submits directly to the PHP endpoint. cPanel must have PHP enabled, working email DNS, and a functioning `mail()` configuration. If the host disables `mail()`, connect the endpoint to the host's SMTP or email API service.
+
+## SEO and content policy
+
+The public copy is written for people searching for software development, software publishing, video marketing tools, writing software, book production tools, and developer partnerships. Product links point to the official product websites so visitors and search engines can find the canonical product information. The site avoids unsupported pricing, adoption, performance, or income claims.
+
+Use the company website as the canonical business link when requesting legitimate directory listings, partner profiles, product announcements, or developer portfolio backlinks. Links should describe the relevant product or partnership and should not be placed in unrelated or automated directories.
 
 ## Accessibility
 
-Target: WCAG 2.2 Level AA. Semantic landmarks and headings, skip link, native controls, visible keyboard focus, persistent theme choice, reduced-motion support, high contrast palettes, and responsive reflow. See ACCESSIBILITY.md for verification and remaining manual checks. ANDI is a testing aid, not a legal certification.
+The site targets WCAG 2.2 Level AA and follows the accessibility practices documented in `ACCESSIBILITY.md`, including keyboard access, focus visibility, semantic HTML, heading structure, color contrast, responsive layouts, reduced-motion support, and announced form status changes. ANDI and browser-based checks are testing aids, not legal certification.
+
+## Contact
+
+General information, product support, billing, partnerships, and accessibility feedback: [info@trumbullsystems.com](mailto:info@trumbullsystems.com).
+
+Legal notices, privacy requests, policy questions, and legal correspondence: [legal@trumbullsystems.com](mailto:legal@trumbullsystems.com).
