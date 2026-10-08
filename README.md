@@ -7,6 +7,7 @@ Static website built with Tailwind CSS 4.1.14. Only `dist/` is published. Origin
 - Content and structure: `dist/index.html`
 - Theme and styles: `src.css`
 - Interactions: `dist/app.js` and `dist/theme.js`
+- Legal pages: edit `build-legal.cjs` and `legal-operations.json`, then run `node build-legal.cjs` before compiling styles. Generated pages are under `dist/legal/`, `dist/privacy-policy/`, `dist/terms-of-service/`, `dist/refund-policy/`, `dist/delivery-policy/`, and `dist/contact/`.
 - Replaceable local images: `dist/assets/`
 - Compile styles: `./tailwindcss.exe -i ./src.css -o ./dist/styles.css --minify`
 - Local preview: `python -m http.server 4173 --bind 127.0.0.1 --directory dist`

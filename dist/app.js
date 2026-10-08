@@ -26,7 +26,7 @@ mobileNav.addEventListener('click', event => { if (event.target.closest('a')) cl
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && !mobileNav.hidden) { closeMenu(); menuButton.focus(); } });
 matchMedia('(min-width: 768px)').addEventListener('change', () => closeMenu());
 document.querySelectorAll('[data-topic]').forEach(link => link.addEventListener('click', () => { document.querySelector('#subject').value = link.dataset.topic; }));
-document.querySelector('#contact-form').addEventListener('submit', event => {
+document.querySelector('#contact-form')?.addEventListener('submit', event => {
  event.preventDefault();
  const form = event.currentTarget;
  if (!form.reportValidity()) return;
