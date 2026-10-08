@@ -32,11 +32,12 @@ document.querySelector('#contact-form')?.addEventListener('submit', event => {
  if (!form.reportValidity()) return;
  const values = new FormData(form);
  const status = document.querySelector('#form-status');
- if (!values.get('h-captcha-response')) { status.textContent = 'Complete the security check before sending.'; return; }
+ const setStatus = (message, kind) => { status.textContent = message; status.className = `form-status ${kind}`; status.setAttribute('role', kind === 'error' ? 'alert' : 'status'); status.setAttribute('aria-live', kind === 'error' ? 'assertive' : 'polite'); };
+ if (!values.get('h-captcha-response')) { setStatus('Complete the security check before sending.', 'error'); return; }
  const button = form.querySelector('button[type="submit"]'); button.disabled = true; button.setAttribute('aria-disabled','true'); status.textContent = 'Sending your message…';
  fetch(form.action, {method:'POST', body:values, headers:{Accept:'application/json'}}).then(async response => {
   const result = await response.json().catch(()=>({}));
   if (!response.ok || !result.ok) throw new Error(result.message || 'The message could not be sent.');
-  form.reset(); if (window.hcaptcha) window.hcaptcha.reset(); status.textContent = 'Your message was sent. We will reply from the appropriate Trumbull Systems address.';
- }).catch(error => { status.textContent = error.message + ' You can email info@trumbullsystems.com directly.'; }).finally(() => { button.disabled = false; button.removeAttribute('aria-disabled'); });
+  form.reset(); if (window.hcaptcha) window.hcaptcha.reset(); setStatus('Your message was sent. We will reply from the appropriate Trumbull Systems address.', 'success');
+ }).catch(error => { setStatus(error.message + ' You can email info@trumbullsystems.com directly.', 'error'); }).finally(() => { button.disabled = false; button.removeAttribute('aria-disabled'); });
 });
