@@ -32,6 +32,7 @@ document.querySelector('#contact-form')?.addEventListener('submit', event => {
  if (!form.reportValidity()) return;
  const values = new FormData(form);
  const body = `Name: ${values.get('name')}\nEmail: ${values.get('email')}\n\n${values.get('body')}`;
- location.href = `mailto:info@trumbullsystems.com?subject=${encodeURIComponent('Trumbull Systems: ' + values.get('subject'))}&body=${encodeURIComponent(body)}`;
- document.querySelector('#form-status').textContent = 'Your email draft is ready to open. If your email app did not open, email info@trumbullsystems.com directly. Your message has not been sent by this website.';
+ const recipient = values.get('subject') === 'Privacy or legal inquiry' ? 'legal@trumbullsystems.com' : 'info@trumbullsystems.com';
+ location.href = `mailto:${recipient}?subject=${encodeURIComponent('Trumbull Systems: ' + values.get('subject'))}&body=${encodeURIComponent(body)}`;
+ document.querySelector('#form-status').textContent = `Your email draft is ready to open. If your email app did not open, email ${recipient} directly. Your message has not been sent by this website.`;
 });

@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const email = '<a href="mailto:info@trumbullsystems.com">info@trumbullsystems.com</a>';
+const legalEmail = '<a href="mailto:legal@trumbullsystems.com">legal@trumbullsystems.com</a>';
 const address = '<address class="not-italic">Trumbull Systems LLC<br>709 Myrtle Street<br>New Britain, CT 06053<br>United States</address>';
 const links = [ ['legal','Policies and support'], ['privacy-policy','Privacy Policy'], ['terms-of-service','Terms of Service'], ['delivery-policy','Digital Delivery'], ['contact','Contact and Support'] ];
 const pages = {
@@ -62,6 +63,23 @@ if(fs.existsSync(operationalFile)) {
  const additional=JSON.parse(fs.readFileSync(operationalFile,'utf8'));
  Object.assign(pages,additional);
  if(additional['refund-policy'])links.splice(3,0,['refund-policy','Refunds and Cancellation']);
+}
+// Route policy and privacy correspondence to Legal; routine product support stays with Info.
+for (const slug of ['privacy-policy', 'terms-of-service']) {
+ pages[slug].sections = pages[slug].sections.map(([title, body]) => [title,
+  body.replaceAll(email, legalEmail).replace('Business and customer support:', 'Legal notices and questions:')
+ ]);
+}
+pages.contact.sections = pages.contact.sections.map(([title, body]) => [title,
+ title === 'Privacy and accessibility'
+  ? body.replace(`For a privacy request, email ${email}`, `For a privacy request, email ${legalEmail}`)
+      .replace('For an accessibility issue, tell us', `For an accessibility issue, email ${email} and tell us`)
+  : body
+]);
+for (const slug of ['legal', 'contact', 'refund-policy', 'delivery-policy']) {
+ if (pages[slug]) pages[slug].sections.push(['Legal and policy questions',
+  `<p>For legal notices, privacy matters or questions about our policies, contact ${legalEmail}. General information, product support and routine billing inquiries go to ${email}.</p>`
+ ]);
 }
 let home=fs.readFileSync('dist/index.html','utf8');
 const header=home.match(/<header[\s\S]*?<\/header>/)[0].replace(/href="#"/g,'href="/"').replace(/href="#(products|company|partnerships|contact)"/g,'href="/#$1"');

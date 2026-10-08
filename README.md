@@ -16,7 +16,7 @@ Tailwind standalone compiler: https://github.com/tailwindlabs/tailwindcss/releas
 
 ## Contact
 
-The contact form opens a `mailto:` draft. It never claims a message has been delivered. All published email addresses use info@trumbullsystems.com, following the requested business domain. When changing it, update dist/index.html, dist/app.js, build-legal.cjs and legal-operations.json, then regenerate the legal pages. The website does not create or configure the mailbox. No API keys or email service are required for the draft form.
+The contact form opens a `mailto:` draft. It never claims a message has been delivered. General information, partnerships, product support and routine billing use info@trumbullsystems.com. Legal notices, privacy requests and policy questions use legal@trumbullsystems.com. The form routes its Privacy or legal inquiry option to Legal and other options to Info. Without JavaScript, use the direct addresses on the Contact and Support page. When changing addresses, update dist/index.html, dist/app.js, build-legal.cjs and legal-operations.json, then regenerate the legal pages. The website does not create or configure mailboxes. No API keys or email service are required for the draft form.
 
 ## Content sources
 
