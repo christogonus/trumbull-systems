@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const email = '<a href="mailto:obutebasil@gmail.com">obutebasil@gmail.com</a>';
+const email = '<a href="mailto:info@trumbullsystems.com">info@trumbullsystems.com</a>';
 const address = '<address class="not-italic">Trumbull Systems LLC<br>709 Myrtle Street<br>New Britain, CT 06053<br>United States</address>';
 const links = [ ['legal','Policies and support'], ['privacy-policy','Privacy Policy'], ['terms-of-service','Terms of Service'], ['delivery-policy','Digital Delivery'], ['contact','Contact and Support'] ];
 const pages = {
